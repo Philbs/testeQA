@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <conio.h>
+#include <conio.h>
+#include <locale.h>
+int flag;
+char opl;
+char string1[50],string2[10], nome[100], senha[10];
+FILE *ArqUsr;
+int main(){
+    system("color f9");
+    setlocale(LC_ALL, "Portuguese");
+    do{
+        printf("\n*---------------------------*");
+        printf("\n|         LOGIN             |");
+        printf("\n*---------------------------*");
+        printf("\n| 1: Fazer login            |");
+        printf("\n|                           |");
+        printf("\n| 2: Fazer cadastro         |");
+        printf("\n|                           |");
+        printf("\n| 3: Sair                   |\n");
+        printf("\n|                           |\n");
+        printf("\n*---------------------------*\n");
+        opl=getch();
+        switch(opl){
+        case '1':                                      //login
+            ArqUsr = fopen("Usuarios.txt","r");        //abre o arquivo com o nome do usuário
+            if (ArqUsr == NULL) {
+                printf("\nNenhum usuário cadastrado");
+                break;
+            }
+            printf("\n\tNOME........: ");
+            scanf("%s", nome);
+            printf("\n\tSENHA........: ");
+            scanf("%s", senha);
+            printf("\n");
+            printf("\n");
+            flag=0;
+            while((fscanf(ArqUsr, "%s%s", string1, string2)) != EOF){
+                if(strcmp(string1,nome) == 0 ){
+                    flag=1;
+                    if(strcmp(string2,senha)==0)flag=2;
+                }
+            }
+            if( flag == 2 ){
+                printf("\nBem-Vindo %s  !\n",nome);
+            }
+            else{
+                if( flag == 1){
+                    printf("\nSua Senha esta Errada !\n");
+                }
+                else{
+                    printf("\nSeu Login e Sua senha estão errados !\n");
+                }
+            }
+            fclose(ArqUsr);
+            break;
+}
